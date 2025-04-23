@@ -1,0 +1,53 @@
+/* src/MovieDetail.css */
+.movie-detail-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .back-button {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #0077cc;
+    font-weight: bold;
+  }
+  
+  .movie-card {
+    display: flex;
+    gap: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+  
+  .movie-poster {
+    width: 250px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .movie-content {
+    flex: 1;
+  }
+  
+  .movie-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .movie-info {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  .movie-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+  }
+  

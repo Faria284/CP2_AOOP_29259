@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import './MovieDetail.css';
 
 function MovieDetail() {
   const { id } = useParams();
@@ -11,14 +12,20 @@ function MovieDetail() {
       .then(res => setMovie(res.data));
   }, [id]);
 
-  if (!movie) return <p>A carregar...</p>;
+  if (!movie) return <p className="movie-info">🔄 A carregar...</p>;
 
   return (
-    <div>
-      <h2>{movie.title}</h2>
-      <p><strong>Ano:</strong> {movie.year}</p>
-      <p><strong>Diretores:</strong> {movie.directors?.join(', ')}</p>
-      <p><strong>Descrição:</strong> {movie.fullplot}</p>
+    <div className="movie-detail-container">
+      <Link to="/" className="back-button">← Voltar</Link>
+      <div className="movie-card">
+        <img src={movie.poster} alt={movie.title} className="movie-poster" />
+        <div className="movie-content">
+          <h2 className="movie-title">{movie.title}</h2>
+          <p className="movie-info"><strong>📅 Ano:</strong> {movie.year}</p>
+          <p className="movie-info"><strong>🎬 Diretores:</strong> {movie.directors?.join(', ')}</p>
+          <p className="movie-description"><strong>📝 Descrição:</strong> {movie.fullplot}</p>
+        </div>
+      </div>
     </div>
   );
 }

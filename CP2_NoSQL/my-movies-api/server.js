@@ -13,7 +13,11 @@ const movieSchema = new mongoose.Schema({}, { collection: 'movies', strict: fals
 const Movie = mongoose.model('Movie', movieSchema);
 
 app.get('/api/movies', async (req, res) => {
-    const movies = await Movie.find().limit(50);
+    const page = parseInt(req.query.page) || 1;
+    const limit = 50;
+    const skip = (page - 1) * limit;
+  
+    const movies = await Movie.find().skip(skip).limit(limit);
     res.json(movies);
 });
 
