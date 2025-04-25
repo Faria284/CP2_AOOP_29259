@@ -6,15 +6,47 @@ import './MovieList.css';
 function MovieList() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [titleInput, setTitleInput] = useState('');
+  const [genreInput, setGenreInput] = useState('');
+  const [titleFilter, setTitleFilter] = useState('');
+  const [genreFilter, setGenreFilter] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/movies?page=${page}`)
+    const params = { page };
+    if (titleFilter.trim()) params.title = titleFilter.trim();
+    if (genreFilter.trim()) params.genre = genreFilter.trim();
+  
+    axios.get('http://localhost:3001/api/movies', { params })
       .then(res => setMovies(res.data));
-  }, [page]);
+  }, [page, titleFilter, genreFilter]);  
 
   return (
     <div className="movie-list-container">
       <h1 className="movie-list-title">🎬 Lista de Filmes</h1>
+      <div className="filters">
+        <input
+            type="text"
+            placeholder="🔍 Procurar por título..."
+            value={titleInput}
+            onChange={(e) => setTitleInput(e.target.value)}
+        />
+        <input
+            type="text"
+            placeholder="🎭 Filtrar por género..."
+            value={genreInput}
+            onChange={(e) => setGenreInput(e.target.value)}
+        />
+        <button
+            className="search-button"
+            onClick={() => {
+            setPage(1);
+            setTitleFilter(titleInput);
+            setGenreFilter(genreInput);
+            }}
+        >
+            🔎 Pesquisar
+        </button>
+        </div>
       <table className="movie-table">
         <thead>
           <tr>

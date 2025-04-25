@@ -17,9 +17,20 @@ app.get('/api/movies', async (req, res) => {
     const limit = 50;
     const skip = (page - 1) * limit;
   
-    const movies = await Movie.find().skip(skip).limit(limit);
+    const title = req.query.title?.trim();
+    const genre = req.query.genre?.trim();
+  
+    const filter = {};
+    if (title) {
+      filter.title = { $regex: title, $options: 'i' };
+    }
+    if (genre) {
+        filter.genres = { $regex: genre, $options: 'i' }; // procura parcial e case-insensitive
+    }      
+  
+    const movies = await Movie.find(filter).skip(skip).limit(limit);
     res.json(movies);
-});
+});  
 
 app.get('/api/movies/:id', async (req, res) => {
     const movie = await Movie.findById(req.params.id);
