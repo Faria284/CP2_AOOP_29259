@@ -47,30 +47,27 @@ function MovieList() {
             🔎 Pesquisar
         </button>
         </div>
-      <table className="movie-table">
-        <thead>
-          <tr>
-            <th>Título</th>
-            <th>Géneros</th>
-            <th>IMDB</th>
-            <th>Tomatoes</th>
-          </tr>
-        </thead>
-        <tbody>
+        <div className="movie-grid">
           {movies.map(movie => (
-            <tr key={movie._id}>
-              <td>
-                <Link to={`/movies/${movie._id}`} className="movie-link">
-                  {movie.title}
-                </Link>
-              </td>
-              <td>{movie.genres?.join(', ') || 'N/A'}</td>
-              <td>{movie.imdb?.rating || 'N/A'}</td>
-              <td>{movie.tomatoes?.critic?.rating || 'N/A'}</td>
-            </tr>
+            <div key={movie._id} className="movie-card">
+              <Link to={`/movies/${movie._id}`}>
+                <div className="poster-wrapper">
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
+                    className="movie-poster"
+                    onError={(e) => { e.target.src = "/fallback.jpg"; }}
+                  />
+                  <div className="movie-overlay">
+                    <h3>{movie.title}</h3>
+                    <p>{movie.genres?.join(', ') || 'N/A'}</p>
+                    <p>{movie.year || 'Ano desconhecido'}</p>
+                  </div>
+                </div>
+              </Link>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
       <div className="pagination-buttons">
         <button
             onClick={() => setPage(p => Math.max(p - 1, 1))}

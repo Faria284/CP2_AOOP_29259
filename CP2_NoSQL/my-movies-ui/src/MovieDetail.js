@@ -26,6 +26,9 @@ function MovieDetail() {
           <p className="movie-description"><strong>📝 Descrição:</strong> {movie.fullplot}</p>
         </div>
       </div>
+      <Link to={`/movies/${id}/comments`} className="view-comments-button">
+        💬 Ver Comentários
+      </Link>
     </div>
   );
 }
