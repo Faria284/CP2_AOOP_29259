@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
 import './MovieComments.css';
+import api from './api';
 
 function MovieComments() {
   const { id } = useParams();
@@ -11,7 +11,7 @@ function MovieComments() {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/comments/${id}`)
+    api.get(`/comments/${id}`)
       .then(res => setComments(res.data))
       .catch(() => setComments([]));
   }, [id]);
@@ -20,9 +20,7 @@ function MovieComments() {
     e.preventDefault();
     if (!name || !email || !newComment) return;
 
-    console.log("A enviar comentário para:", `http://localhost:3001/api/comments/${id}`);
-
-    const res = await axios.post(`http://localhost:3001/api/comments/${id}`, {
+    const res = await api.post(`/comments/${id}`, {
       name,
       email,
       text: newComment
@@ -49,7 +47,7 @@ function MovieComments() {
   const handleSaveEdit = async (id) => {
     const comment = comments.find(c => c._id === id);
     try {
-      const res = await axios.put(`http://localhost:3001/api/comments/${id}`, {
+      const res = await api.put(`/comments/${id}`, {
         text: comment.editText
       });
   
@@ -63,25 +61,25 @@ function MovieComments() {
   };
   
   const handleDeleteComment = async (commentId) => {
-    await axios.delete(`http://localhost:3001/api/comments/${commentId}`);
+    await api.delete(`/comments/${commentId}`);
     setComments(comments.filter(c => c._id !== commentId));
   };  
 
   return (
     <div className="comments-page">
-      <Link to={`/movies/${id}`} className="back-button">← Voltar ao filme</Link>
-      <h2>💬 Comentários</h2>
+      <Link to={`/movies/${id}`} className="back-button">← Back to Movie Details</Link>
+      <h2>💬 Comments</h2>
   
       <form onSubmit={handleAddComment} className="comment-form">
-        <input type="text" placeholder="Nome" value={name} onChange={e => setName(e.target.value)} required />
+        <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required />
         <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
         <textarea
-          placeholder="Comentário..."
+          placeholder="Comment..."
           value={newComment}
           onChange={e => setNewComment(e.target.value)}
           required
         ></textarea>
-        <button type="submit">Adicionar Comentário</button>
+        <button type="submit">Add Comment</button>
       </form>
   
       <ul className="comment-list">

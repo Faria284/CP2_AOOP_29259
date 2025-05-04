@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './MovieList.css';
+import api from './api';
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
@@ -16,23 +16,23 @@ function MovieList() {
     if (titleFilter.trim()) params.title = titleFilter.trim();
     if (genreFilter.trim()) params.genre = genreFilter.trim();
   
-    axios.get('http://localhost:3001/api/movies', { params })
+    api.get('/movies', { params })
       .then(res => setMovies(res.data));
   }, [page, titleFilter, genreFilter]);  
 
   return (
     <div className="movie-list-container">
-      <h1 className="movie-list-title">🎬 Lista de Filmes</h1>
+      <h1 className="movie-list-title">🎬 Movies List</h1>
       <div className="filters">
         <input
             type="text"
-            placeholder="🔍 Procurar por título..."
+            placeholder="🔍 Search for title..."
             value={titleInput}
             onChange={(e) => setTitleInput(e.target.value)}
         />
         <input
             type="text"
-            placeholder="🎭 Filtrar por género..."
+            placeholder="🎭 Filter by gender..."
             value={genreInput}
             onChange={(e) => setGenreInput(e.target.value)}
         />
@@ -44,12 +44,12 @@ function MovieList() {
             setGenreFilter(genreInput);
             }}
         >
-            🔎 Pesquisar
+            🔎 Search
         </button>
         </div>
         <div className="movie-grid">
           {movies.map(movie => (
-            <div key={movie._id} className="movie-card">
+            <div key={movie._id} className="movie-card-preview">
               <Link to={`/movies/${movie._id}`}>
                 <div className="poster-wrapper">
                   <img
@@ -61,7 +61,7 @@ function MovieList() {
                   <div className="movie-overlay">
                     <h3>{movie.title}</h3>
                     <p>{movie.genres?.join(', ') || 'N/A'}</p>
-                    <p>{movie.year || 'Ano desconhecido'}</p>
+                    <p>{movie.year || 'Unknown Year'}</p>
                   </div>
                 </div>
               </Link>
@@ -73,16 +73,16 @@ function MovieList() {
             onClick={() => setPage(p => Math.max(p - 1, 1))}
             disabled={page === 1}
         >
-            ◀ Anterior
+            ◀ Previous
         </button>
 
-        <span>Página {page}</span>
+        <span>Page {page}</span>
 
         <button
             onClick={() => setPage(p => p + 1)}
-            disabled={movies.length < 50} // se receber menos de 50, provavelmente é a última
+            disabled={movies.length < 50} 
         >
-            Próxima ▶
+            Next ▶
         </button>
         </div>
     </div>
