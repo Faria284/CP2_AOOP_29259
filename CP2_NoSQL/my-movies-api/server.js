@@ -47,7 +47,7 @@ app.get('/api/comments/:id', async (req, res) => {
   res.json(comments);
 });
 
-app.post('/api/movies/:id/comments/:id', async (req, res) => {
+app.post('/api/comments/:id', async (req, res) => {
   try {
     const { name, email, text } = req.body;
 
