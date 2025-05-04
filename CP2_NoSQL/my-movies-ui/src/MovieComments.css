@@ -75,4 +75,24 @@
   .comment-list p {
     margin: 0.25rem 0;
   }
+
+  .comment-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .comment-actions button {
+    background-color: #eee;
+    border: none;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .comment-actions button:hover {
+    background-color: #ddd;
+  }
+  
   

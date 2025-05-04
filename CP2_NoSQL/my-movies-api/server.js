@@ -72,6 +72,26 @@ app.post('/api/comments/:id', async (req, res) => {
   }
 });
 
+app.put('/api/comments/:commentId', async (req, res) => {
+  try {
+    const { text } = req.body;
+
+    const updated = await Comment.findByIdAndUpdate(
+      req.params.commentId,
+      { text, date: new Date() },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: 'Comentário não encontrado.' });
+    }
+
+    res.json(updated);
+  } catch (error) {
+    console.error('Erro ao atualizar comentário:', error);
+    res.status(500).json({ error: 'Erro interno.' });
+  }
+});
 
 app.delete('/api/comments/:commentId', async (req, res) => {
   await Comment.findByIdAndDelete(req.params.commentId);
