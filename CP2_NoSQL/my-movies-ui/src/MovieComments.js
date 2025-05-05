@@ -56,7 +56,7 @@ function MovieComments() {
       );
       setComments(updated);
     } catch (error) {
-      console.error("Erro ao editar comentário:", error);
+      console.error("Error editing comment:", error);
     }
   };
   
@@ -101,13 +101,13 @@ function MovieComments() {
               <div className="comment-actions">
                 {comment.editing ? (
                   <>
-                    <button onClick={() => handleSaveEdit(comment._id)}>💾 Guardar</button>
-                    <button onClick={() => cancelEdit(comment._id)}>❌ Cancelar</button>
+                    <button onClick={() => handleSaveEdit(comment._id)}>💾 Save</button>
+                    <button onClick={() => cancelEdit(comment._id)}>❌ Cancel</button>
                   </>
                 ) : (
                   <>
-                    <button onClick={() => toggleEdit(comment._id)}>✏️ Editar</button>
-                    <button onClick={() => handleDeleteComment(comment._id)}>🗑️ Remover</button>
+                    <button onClick={() => toggleEdit(comment._id)}>✏️ Edit</button>
+                    <button onClick={() => handleDeleteComment(comment._id)}>🗑️ Delete</button>
                   </>
                 )}
               </div>

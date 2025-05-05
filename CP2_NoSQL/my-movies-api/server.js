@@ -15,6 +15,7 @@ const Movie = mongoose.model('Movie', movieSchema);
 const commentSchema = new mongoose.Schema({}, { collection: 'comments', strict: false });
 const Comment = mongoose.model('Comment', commentSchema);
 
+// Lista de filmes e detalhes do mesmo
 app.get('/api/movies', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 50;
@@ -53,7 +54,7 @@ app.post('/api/comments/:id', async (req, res) => {
 
     // Verifica se o id é um ObjectId válido
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(400).json({ error: 'ID inválido do filme.' });
+      return res.status(400).json({ error: 'Invalid Movie ID.' });
     }
 
     const comment = new Comment({
@@ -67,8 +68,8 @@ app.post('/api/comments/:id', async (req, res) => {
     await comment.save();
     res.status(201).json(comment);
   } catch (error) {
-    console.error('Erro ao adicionar comentário:', error);
-    res.status(500).json({ error: 'Erro ao adicionar comentário.' });
+    console.error('Error adding comment:', error);
+    res.status(500).json({ error: 'Error adding comment.' });
   }
 });
 
@@ -83,13 +84,13 @@ app.put('/api/comments/:commentId', async (req, res) => {
     );
 
     if (!updated) {
-      return res.status(404).json({ error: 'Comentário não encontrado.' });
+      return res.status(404).json({ error: 'Comment not found.' });
     }
 
     res.json(updated);
   } catch (error) {
-    console.error('Erro ao atualizar comentário:', error);
-    res.status(500).json({ error: 'Erro interno.' });
+    console.error('Error updating comment:', error);
+    res.status(500).json({ error: 'Internal error.' });
   }
 });
 
@@ -98,4 +99,4 @@ app.delete('/api/comments/:commentId', async (req, res) => {
   res.status(204).end();
 });
 
-app.listen(3001, () => console.log('Servidor a correr na porta 3001'));
+app.listen(3001, () => console.log('Server running on port 3001'));

@@ -12,7 +12,7 @@ function MovieDetail() {
       .then(res => setMovie(res.data));
   }, [id]);
 
-  if (!movie) return <p className="movie-info">🔄 A carregar...</p>;
+  if (!movie) return <p className="movie-info">🔄 Loading...</p>;
 
   return (
     <div className="movie-detail-container">
